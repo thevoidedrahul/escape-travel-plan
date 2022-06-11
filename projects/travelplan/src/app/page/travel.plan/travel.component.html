@@ -1,0 +1,47 @@
+<div class="page-component">
+    <div class="travel-card">
+        <div class="card-heading">
+            Travel Plan
+        </div>
+        <div class="card-content">
+            <ng-container>
+                <div class="input-field">
+                    <location-input [label]="'Departure'" [placeholder]="'Search departure'" [disabled]="formSubmitted"
+                        (processing)="searchDepartureIsInProcess($event)" (location)="setDepartureValue($event)">
+                    </location-input>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="destinations && destinations.length > 0">
+                <ng-container *ngFor="let dest of destinations; let index = index; trackBy:trackByName">
+                    <div class="input-field">
+                        <location-input [label]="index > 0 ? 'Add City' : 'Destination'"
+                            [placeholder]=" index > 0 ? 'Search City' : 'Search destination'" [selectedValue]="dest"
+                            [disabled]="formSubmitted" (location)="setDestinationValue(index, $event)"></location-input>
+                    </div>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="showSubmitButton">
+                <div class="button-container">
+                    <div class="add-more">
+                        <button mat-flat-button class="secondary-btn" [disabled]="formSubmitted"
+                            (click)="addMoreCityInDestination()">Add More City</button>
+                    </div>
+                    <div class="complete-trip">
+                        <button mat-flat-button class="primary-btn" [disabled]="formSubmitted"
+                            (click)="completedTrip()">Completed Trip</button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="travel-card" #viewMapCard *ngIf="formSubmitted">
+        <div class="card-heading">
+            View Map
+        </div>
+        <div class="card-content">
+            <view-map [departure]="departure" [destinations]="destinations"></view-map>
+        </div>
+    </div>
+
+</div>

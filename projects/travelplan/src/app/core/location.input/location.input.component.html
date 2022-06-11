@@ -1,0 +1,13 @@
+<mat-form-field class="mat-input" appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input matInput placeholder="{{placeholder}}" name="locationInputModel" #locationInputModel="ngModel" #locationInput
+        [(ngModel)]="locationSearch" [matAutocomplete]="autocomplete" [disabled]="disabled" required>
+    <mat-autocomplete autoActiveFirstOption #autocomplete="matAutocomplete"
+        (optionSelected)="setSelectedOption($event.option.value)">
+        <mat-option *ngFor="let option of locationList" [value]="option">
+            {{option.name}}, {{option.country?.name}}
+        </mat-option>
+    </mat-autocomplete>
+    <mat-icon matPrefix class="material-icons-round">search</mat-icon>
+    <mat-error *ngIf="locationInputModel.errors?.required">{{label}} is required.</mat-error>
+</mat-form-field>
